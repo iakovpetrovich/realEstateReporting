@@ -4,6 +4,7 @@ import requests as req
 import urllib.request
 import time
 import numpy as np
+from datetime import datetime
 
 prices = []
 spaces = []
@@ -16,8 +17,9 @@ pricePerSpaces = []
 rooms = []
 floors = []
 advertisers = []
-pageUrl = 'FigureOutYourself'
-domain = 'FigureOutYourself'
+pageUrl = 'https://www.halooglasi.com/nekretnine/prodaja-stanova/beograd?page='
+domain = 'https://www.halooglasi.com'
+
 
 
 
@@ -102,7 +104,7 @@ def extractData(flats,prices = [],spaces = [],municipalities = [],blocks = [],st
 
 
 
-for page in range(1,3):
+for page in range(1,887):
     try:
         
         serachUrl = pageUrl + str(page)
@@ -122,13 +124,18 @@ for page in range(1,3):
         extractData(standardFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         extractData(distingushedFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         
-        time.sleep(0.5)
+        time.sleep(0.3)
     
     except Exception as e:
         print(str(e))
 
+#getSnapskotDate
+snapshotDate = datetime.today().strftime('%d.%m.%Y')
+snapshotDate = [snapshotDate]*len(prices)
+yyymmdd = datetime.today().strftime('%Y%m%d')
+links = list(map(lambda x:yyymmdd+ 'id'+ x[37:len(x)],links))
 
-dataFrame = pd.DataFrame({'Price':prices,'Space':spaces,'PricePerSpace':pricePerSpaces,'Rooms':rooms,'Floors':floors,'Ogasivac':advertisers,'Municipality':municipalities,'Area':blocks,'Address':streets,'LastChanged':dates,'Link':links})
+dataFrame = pd.DataFrame({'Price':prices,'Space':spaces,'PricePerSpace':pricePerSpaces,'Rooms':rooms,'Floors':floors,'Ogasivac':advertisers,'Municipality':municipalities,'Area':blocks,'Address':streets,'LastChanged':dates,'Link':links, 'snapshotDate':snapshotDate})
 
 
-dataFrame.to_csv('AdsBeograd.csv',encoding='utf-16',sep='\t', index=False)
+dataFrame.to_csv('AdsBeograd'+yyymmdd+'.csv',encoding='utf-16',sep='\t', index=False)
