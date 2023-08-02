@@ -104,7 +104,7 @@ def extractData(flats,prices = [],spaces = [],municipalities = [],blocks = [],st
 
 
 
-for page in range(1,887):
+for page in range(1,484):
     try:
         
         serachUrl = pageUrl + str(page)
@@ -124,7 +124,7 @@ for page in range(1,887):
         extractData(standardFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         extractData(distingushedFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         
-        time.sleep(0.3)
+        time.sleep(0.5)
     
     except Exception as e:
         print(str(e))
@@ -139,3 +139,4 @@ dataFrame = pd.DataFrame({'Price':prices,'Space':spaces,'PricePerSpace':pricePer
 
 
 dataFrame.to_csv('AdsBeograd'+yyymmdd+'.csv',encoding='utf-16',sep='\t', index=False)
+#sC:\Users\jasap
