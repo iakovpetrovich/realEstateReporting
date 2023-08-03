@@ -104,7 +104,10 @@ def extractData(flats,prices = [],spaces = [],municipalities = [],blocks = [],st
 
 
 
-for page in range(1,614):
+
+
+for page in range(1,484):
+
     try:
         
         serachUrl = pageUrl + str(page)
@@ -124,8 +127,10 @@ for page in range(1,614):
         extractData(standardFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         extractData(distingushedFlats,prices,spaces,municipalities,blocks,streets,dates,links,domain)
         
-        time.sleep(0.1)
-    
+
+
+        time.sleep(0.5)
+
     except Exception as e:
         print(str(e))
 
@@ -138,4 +143,6 @@ links = list(map(lambda x:yyymmdd+ 'id'+ x[37:len(x)],links))
 dataFrame = pd.DataFrame({'Price':prices,'Space':spaces,'PricePerSpace':pricePerSpaces,'Rooms':rooms,'Floors':floors,'Ogasivac':advertisers,'Municipality':municipalities,'Area':blocks,'Address':streets,'LastChanged':dates,'Link':links, 'snapshotDate':snapshotDate})
 
 
-dataFrame.to_csv('/home/jakov/Projects/realEstateReporting/AdsBeograd'+yyymmdd+'.csv',encoding='utf-16',sep='\t', index=False)
+
+dataFrame.to_csv('AdsBeograd'+yyymmdd+'.csv',encoding='utf-16',sep='\t', index=False)
+
